@@ -39,5 +39,5 @@ databases:
   # 3. PostgreSQL Database
   - name: subtracker-db
     databaseName: subtracker
-    user: postgres
+    user: subtracker_user
     plan: free
