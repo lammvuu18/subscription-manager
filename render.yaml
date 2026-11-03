@@ -3,10 +3,10 @@ services:
   - type: web
     name: subtracker-server
     runtime: node
+    plan: free
     rootDir: server
     buildCommand: npm install
     startCommand: npm start
-    plan: free
     envVars:
       - key: PORT
         value: 5000
@@ -20,8 +20,10 @@ services:
         value: "false"
 
   # 2. Frontend Static Site
-  - type: static
+  - type: web
     name: subtracker-client
+    runtime: static
+    plan: free
     rootDir: client
     buildCommand: npm install && npm run build
     staticPublishPath: dist
@@ -31,10 +33,7 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_URL
-        fromService:
-          type: web
-          name: subtracker-server
-          property: host
+        value: https://subtracker-server.onrender.com/api/subscriptions
 
 databases:
   # 3. PostgreSQL Database
