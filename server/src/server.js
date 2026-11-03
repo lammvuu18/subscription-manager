@@ -1,32 +1,24 @@
-const express = require("express");
-const cors = require("cors");
+/**
+ * server.js - Điểm khởi động HTTP Server của SubTracker
+ */
+
 require("dotenv").config();
-
-const app = express();
-const PORT = process.env.PORT || 5000;
-
-app.use(cors());
-app.use(express.json());
-
-const subscriptionsRouter = require("./routes/subscriptions");
-app.use("/api/subscriptions", subscriptionsRouter);
-
+const app = require("./app");
 const pool = require("./config/db");
 
-app.get("/api/db-test", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT NOW()");
-    res.json({ status: "OK", databaseTime: result.rows[0].now });
-  } catch (error) {
-    console.error("Database connection failed:", error.message);
-    res.status(500).json({ status: "ERROR", message: "Database connection failed" });
-  }
-});
+const PORT = process.env.PORT || 5000;
 
-app.get("/api/health", (req, res) => {
-  res.json({ status: "OK", message: "SubTracker API is running!" });
-});
+// Kiểm tra kết nối CSDL khi khởi động
+pool
+  .query("SELECT NOW()")
+  .then((res) => {
+    console.log("✅ Kết nối PostgreSQL thành công lúc:", res.rows[0].now);
+  })
+  .catch((err) => {
+    console.warn("⚠️ Cảnh báo: Chưa kết nối được PostgreSQL:", err.message);
+    console.warn("   Hãy đảm bảo PostgreSQL đã chạy và bảng được khởi tạo qua schema.sql.");
+  });
 
 app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+  console.log(`🚀 SubTracker Backend Server đang chạy tại: http://localhost:${PORT}`);
 });

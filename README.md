@@ -23,3 +23,7 @@ This system contains complex business logic that requires strict validation. Tes
 - **Frontend:** HTML, CSS, JavaScript (Tailwind CSS / DaisyUI for UI)
 - **Backend:**
 - **Database:** 
+
+## Tài khoản thử nghiệm
+- ban@example.com (Matkhau123) => tk mặc định
+- ban@gmail.com (matkhau123)
