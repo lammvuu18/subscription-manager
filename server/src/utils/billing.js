@@ -233,7 +233,7 @@ function calculateBillingSchedule(startDateInput, cycle, todayInput = new Date()
   const daysLeft = Math.round((nextStep.utc - utcToday) / MS_PER_DAY);
 
   // Tính mức cảnh báo (alertLevel - BUS-13)
-  const alertLevel = daysLeft < 3 ? "warning" : "safe";
+  const alertLevel = daysLeft <= 3 ? "warning" : "safe";
 
   // Tính tiến độ (progress - BUS-12)
   let rawProgress;

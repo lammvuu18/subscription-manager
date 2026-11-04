@@ -71,11 +71,11 @@ export default function Dashboard({ subscriptions }) {
   const active = subscriptions.filter((s) => s.status === "active");
   const cancelled = subscriptions.filter((s) => s.status === "cancelled");
 
-  const totalMonthly = active.reduce(
+  const totalMonthly = subscriptions.reduce(
     (sum, s) => sum + toMonthlyVND(s.amount, s.currency, s.billing_cycle),
     0
   );
-  const totalYearly = totalMonthly * 12;
+  const totalYearly = totalMonthly * 10;
   const savedMonthly = cancelled.reduce(
     (sum, s) => sum + toMonthlyVND(s.amount, s.currency, s.billing_cycle),
     0
@@ -260,10 +260,10 @@ export default function Dashboard({ subscriptions }) {
       return (b.schedule.daysLeft ?? -1) - (a.schedule.daysLeft ?? -1);
     }
     if (sortBy === "costDesc") {
-      return b.monthlyCost - a.monthlyCost;
+      return a.monthlyCost - b.monthlyCost;
     }
     if (sortBy === "costAsc") {
-      return a.monthlyCost - b.monthlyCost;
+      return b.monthlyCost - a.monthlyCost;
     }
     if (sortBy === "nameAsc") {
       return a.service_name.localeCompare(b.service_name, "vi");
@@ -502,9 +502,7 @@ export default function Dashboard({ subscriptions }) {
                     s.currency === "USD"
                       ? toMonthlyVND(s.amount, s.currency, s.billing_cycle)
                       : null;
-                  const daysDisplay = isToday
-                    ? "Hôm nay (0 ngày)"
-                    : `còn ${daysLeft ?? 0} ngày`;
+                  const daysDisplay = `còn ${daysLeft ?? 0} ngày`;
 
                   return (
                     <div key={s.id} className="service-card">
@@ -538,7 +536,7 @@ export default function Dashboard({ subscriptions }) {
               {totalPages > 1 && (
                 <div className="pagination-bar">
                   <span className="pagination-info">
-                    Hiển thị {startIndex + 1} - {Math.min(startIndex + PAGE_SIZE, totalItems)} / {totalItems} dịch vụ
+                    Hiển thị {startIndex} - {Math.min(startIndex + PAGE_SIZE, totalItems)} / {totalItems} dịch vụ
                   </span>
                   <div className="pagination-controls">
                     <button

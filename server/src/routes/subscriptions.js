@@ -222,16 +222,15 @@ router.patch("/:id/status", validateStatus, async (req, res) => {
   try {
     // Kiểm tra và cập nhật trạng thái
     const result = await pool.query(
-      `UPDATE subscriptions
-       SET status = $1, updated_at = CURRENT_TIMESTAMP
-       WHERE id = $2 AND user_id = $3
-       RETURNING *`,
-      [status, id, req.user.id]
+      `SELECT * FROM subscriptions
+       WHERE id = $1 AND user_id = $2`,
+      [id, req.user.id]
     );
 
     if (result.rows.length === 0) {
       return res.status(404).json(ERROR_CODES.ERR_12);
     }
+    result.rows[0].status = status;
 
     // Lấy tỷ giá và toàn bộ danh sách gói để tính tổng chi phí mới
     const settingsRes = await pool.query(

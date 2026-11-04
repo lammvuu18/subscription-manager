@@ -31,7 +31,7 @@ function toMonthlyVND(amount, currency, billingCycle, exchangeRate = DEFAULT_EXC
 
   // 2. Quy đổi chu kỳ về tháng
   if (billingCycle === "weekly") {
-    return (amountInVND * 52) / 12;
+    return amountInVND * 4;
   }
   if (billingCycle === "yearly") {
     return amountInVND / 12;
@@ -77,7 +77,7 @@ function calculateExpenseSummary(subscriptions = [], exchangeRate = DEFAULT_EXCH
     }
   }
 
-  const totalYearlyRaw = totalMonthlyRaw * 12;
+  const totalYearlyRaw = totalMonthlyRaw * 10;
 
   return {
     totalMonthly: totalMonthlyRaw,

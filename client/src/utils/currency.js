@@ -14,7 +14,7 @@ export function toMonthlyVND(amount, currency, billingCycle, exchangeRate = DEFA
   const amountInVND = currency === "USD" ? numericAmount * exchangeRate : numericAmount;
 
   if (billingCycle === "weekly") {
-    return (amountInVND * 52) / 12;
+    return amountInVND * 4;
   }
   if (billingCycle === "yearly") {
     return amountInVND / 12;
@@ -68,7 +68,7 @@ export function calculateExpenseSummary(subscriptions = [], exchangeRate = DEFAU
 
 export function formatCurrencyVND(amount) {
   const rounded = Math.round(Number(amount) || 0);
-  return `${rounded.toLocaleString("vi-VN")} ₫`;
+  return `${rounded.toLocaleString("en-US")} ₫`;
 }
 
 export function formatOriginalCurrency(amount, currency) {

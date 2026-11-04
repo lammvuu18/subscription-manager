@@ -114,7 +114,7 @@ export default function SubscriptionModal({
       newErrors.amount = "Vui lòng nhập số tiền hợp lệ.";
     } else {
       const numAmount = Number(form.amount);
-      if (numAmount <= 0) {
+      if (numAmount < 0) {
         newErrors.amount = "Số tiền phải lớn hơn 0.";
       } else if (numAmount > 1000000000) {
         newErrors.amount = "Số tiền không được vượt quá 1.000.000.000.";

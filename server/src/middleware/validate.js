@@ -102,7 +102,7 @@ function validateSubscription(req, res, next) {
     return res.status(400).json(ERROR_CODES.ERR_03);
   }
   const numAmount = Number(amount);
-  if (numAmount <= 0) {
+  if (numAmount < 0) {
     return res.status(400).json(ERROR_CODES.ERR_04);
   }
   if (numAmount > 1000000000) {

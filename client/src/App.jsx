@@ -114,7 +114,9 @@ function AppContent() {
 
     try {
       await changeSubscriptionStatus(sub.id, newStatus);
-      await loadData();
+      setSubscriptions((prev) =>
+        prev.map((s) => (s.id === sub.id ? { ...s, status: newStatus } : s))
+      );
 
       if (newStatus === "cancelled") {
         // DIS-07: Hủy = đỏ/hồng

@@ -205,7 +205,7 @@ export function calculateBillingSchedule(startDateInput, cycle, todayInput = new
   }
 
   const daysLeft = Math.round((nextStep.utc - utcToday) / MS_PER_DAY);
-  const alertLevel = daysLeft < 3 ? "warning" : "safe";
+  const alertLevel = daysLeft <= 3 ? "warning" : "safe";
 
   let rawProgress;
   if (daysLeft === 0) {
